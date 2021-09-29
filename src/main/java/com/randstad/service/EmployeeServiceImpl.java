@@ -33,10 +33,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     public List<EmployeeDto> getAllEmployees(){
        List<Employee> listEmployee=employeeDao.getAllEmployees();
        List<EmployeeDto> employeeDto=new ArrayList<>();
-       for (Employee employee:listEmployee){
-           employeeDto.add(convertToDTO(employee));
-       }
-       return employeeDto;
+       listEmployee.forEach(
+               (employee ->employeeDto.add(convertToDTO(employee)))
+       );
+        return employeeDto;
     }
 
     /** getting the employee based on the id, converting to dto and sending back to UI */
