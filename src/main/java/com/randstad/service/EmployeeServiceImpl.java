@@ -20,6 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     @Transactional
+    /** converting the new employee into entity and storing into the db */
     public Employee addEmployee(EmployeeDto employeeDto){
         Employee employee=convertToEntity(employeeDto);
         employeeDao.addEmployee(employee);
@@ -28,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     @Transactional
+    /** getting each of the employees from the table, converting to dto and sending back to the UI */
     public List<EmployeeDto> getAllEmployees(){
        List<Employee> listEmployee=employeeDao.getAllEmployees();
        List<EmployeeDto> employeeDto=new ArrayList<>();
@@ -37,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService{
        return employeeDto;
     }
 
-
+    /** getting the employee based on the id, converting to dto and sending back to UI */
     public EmployeeDto getEmployee(int id) {
         return convertToDTO(employeeDao.getEmployee(id));
     }
@@ -49,16 +51,19 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     @Transactional
+    /** deleting employee using id */
     public void deleteEmployee(Integer employeeId) {
         employeeDao.deleteEmployee(employeeId);
     }
 
     @Override
+    /** using modelMapper to convert entity to dto so that it can interact with the UI */
     public EmployeeDto convertToDTO (Employee employee)
     {
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
         return employeeDto;
     }
+    /** using modelMapper to convert dto to entity so that we can access the class */
     @Override
     public Employee convertToEntity(EmployeeDto employeeDto){
         Employee employee=modelMapper.map(employeeDto,Employee.class);

@@ -12,6 +12,7 @@
     <!-- Getting Database properties -->
     <context:property-placeholder location="classpath:application.properties"/>
     <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="../WEB-INF/"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/" />
