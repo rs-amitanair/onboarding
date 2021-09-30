@@ -52,11 +52,11 @@
             </tr>
             <tr>
                 <td>Password</td>
-                <td><form:input path="password"  required="required" type="password" id="pass"/></td>
+                <td><form:password path="password"  required="required" id="pass"/></td>
             </tr>
             <tr>
                 <td>Confirm Password</td>
-                <td><form:input path="confirmPassword"  required="required" type="password" id="conf"/></td>
+                <td><input required="required" type="password" id="conf"/></td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Save"></td>
