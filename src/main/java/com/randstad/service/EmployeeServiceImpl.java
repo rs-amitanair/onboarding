@@ -1,7 +1,9 @@
 package com.randstad.service;
 
 import com.randstad.dao.EmployeeDao;
+import com.randstad.dto.CountryDto;
 import com.randstad.dto.EmployeeDto;
+import com.randstad.model.Country;
 import com.randstad.model.Employee;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import java.util.List;
 
 
 @Service
-@Transactional
 public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeDao employeeDao;
@@ -32,7 +33,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     @Transactional
-
     /**
      * listing each employee from db,converting to dto and sending to ui
      */
@@ -45,7 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeDto;
     }
 
-
+    @Override
+    @Transactional
     /**
      *
      * @param id
@@ -55,9 +56,17 @@ public class EmployeeServiceImpl implements EmployeeService{
         return convertToDTO(employeeDao.getEmployee(id));
     }
 
+    @Transactional
+    @Override
+    public boolean getMail(String mail){
+        if(employeeDao.getMail(mail)== 0)
+            return true;
+        else
+            return false;
+    }
+
     @Override
     @Transactional
-
     /**
      *
      * @param employeeId
@@ -75,7 +84,17 @@ public class EmployeeServiceImpl implements EmployeeService{
      */
     public EmployeeDto convertToDTO (Employee employee)
     {
-        EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+        EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setId(employee.getId());
+        employeeDto.setFirstName(employee.getFirstName());
+        employeeDto.setLastName(employee.getLastName());
+        employeeDto.setEmail(employee.getEmail());
+        employeeDto.setPassword(employee.getPassword());
+        employeeDto.setAddress(employee.getAddress());
+        employeeDto.setCity(employee.getCity());
+        employeeDto.setState(employee.getState());
+        employeeDto.setCountryId(employee.getCountry().getId());
+        employeeDto.setCountryName(employee.getCountry().getCountryName());
         return employeeDto;
     }
 
@@ -89,5 +108,25 @@ public class EmployeeServiceImpl implements EmployeeService{
         Employee employee=modelMapper.map(employeeDto,Employee.class);
         return employee;
     }
+
+    @Override
+    @Transactional
+    public List<CountryDto> getAllCountries() {
+        List<Country> countryList=employeeDao.getAllCountries();
+        List<CountryDto> countryDto=new ArrayList<>();
+        countryList.forEach(
+                (country->countryDto.add(convertToDTO(country)))
+        );
+        return countryDto;
+
+    }
+
+    @Override
+    public CountryDto convertToDTO(Country country){
+        CountryDto countryDto=modelMapper.map(country,CountryDto.class);
+        return countryDto;
+    }
+
+
 }
 

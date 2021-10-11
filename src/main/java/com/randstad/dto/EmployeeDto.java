@@ -1,5 +1,7 @@
 package com.randstad.dto;
 
+import com.randstad.model.Employee;
+
 public class EmployeeDto {
     /**
      * employee id
@@ -44,7 +46,17 @@ public class EmployeeDto {
     /**
      * employee country
      */
-    private String country;
+    private int countryId;
+
+    private String countryName;
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
 
     /**
      *  gets the id
@@ -154,22 +166,12 @@ public class EmployeeDto {
         this.state = state;
     }
 
-    /**
-     * gets the country
-     *
-     * @return
-     */
-    public String getCountry() {
-        return country;
+    public int getCountryId() {
+        return countryId;
     }
 
-    /**
-     * sets the country
-     *
-     * @param country
-     */
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 
     /**
@@ -207,4 +209,6 @@ public class EmployeeDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

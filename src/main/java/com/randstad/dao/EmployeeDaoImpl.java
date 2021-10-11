@@ -1,8 +1,9 @@
 package com.randstad.dao;
 
-import com.randstad.dto.EmployeeDto;
+import com.randstad.model.Country;
 import com.randstad.model.Employee;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return sessionFactory.getCurrentSession().createQuery("from Employee").list();
     }
 
+    @Override
+    public List<Country> getAllCountries(){
+        return sessionFactory.getCurrentSession().createQuery("from Country").list();
+    }
+
     /**
      *
      * @param id
@@ -42,8 +48,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
      */
     @Override
     public Employee getEmployee(int id){
-        return (Employee) sessionFactory.getCurrentSession().get(
-                Employee.class, id);
+        return sessionFactory.getCurrentSession().get(Employee.class, id);
+    }
+
+    @Override
+    public Long getMail(String mail){
+         Query query=sessionFactory.getCurrentSession().createQuery("select count(id) from Employee where email= :email");
+         query.setParameter("email",mail);
+         Long count=(Long) query.uniqueResult();
+         return count;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.randstad.model;
 import javax.persistence.*;
 
 @Entity
+@Table
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,11 +55,12 @@ public class Employee {
      */
     private String state;
 
-    @Column
+    @OneToOne
+    @JoinColumn(name = "country_id",referencedColumnName = "id")
     /**
      * employee country
      */
-    private String country;
+    private Country country;
 
     /**
      *  gets the id
@@ -168,21 +170,11 @@ public class Employee {
         this.state = state;
     }
 
-    /**
-     * gets the country
-     *
-     * @return country
-     */
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    /**
-     * sets the country
-     *
-     * @param country
-     */
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
